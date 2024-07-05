@@ -1,0 +1,41 @@
+
+.contnet_top>.login {
+	width: 30%;
+	height: 100%;
+	border: 1px solid black;
+}
+
+.login {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 100%;
+}
+
+.login_box {
+	width: 80%;
+	margin: 10%;
+}
+
+.login_table {
+	width: 100%;
+}
+
+#email,#password{
+	width:100%;
+	margin-bottom:10px;
+}
+
+.login_api{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:100%;
+	gap:20px;
+}
+.login_api>button {
+	width:70%;
+	height:20%;
+}

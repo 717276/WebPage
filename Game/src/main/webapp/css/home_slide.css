@@ -1,0 +1,34 @@
+.content_top>.slide {
+	width: 70%;
+	height: 100%;
+    overflow: hidden;
+}
+.wrapper{
+	height:90%;
+    width:500%;
+    transition: all 1s;
+}
+.img_box{
+	height:100%;
+    width:20%;
+    float:left;
+}
+.img_box>a{
+	display: block;
+	height:100%;
+    width:100%;
+}
+.img_box>a>img{
+	height:100%;
+    width:100%;
+}
+.moveButton{
+	display:flex;
+	justify-content:space-between;
+	width:90%;
+	height:10%;
+	margin:auto;
+}
+.left,.right{
+	font-size:30px;
+}
