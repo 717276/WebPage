@@ -45,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		})
 	})
 })
+function write(){
+	window.location.href="/Game/write.jsp";
+}
 
 function setArticles(articles) {
 	$(".list").empty();
@@ -53,7 +56,7 @@ function setArticles(articles) {
 		let alink = document.createElement("a");
 		let ul = document.createElement("ul");
 
-		alink.href = "/article?param=" + articles[i].no;
+		alink.href = "/Game/article/get?param=" + articles[i].no;
 		ul.className = "article_ul";
 		for (let j = 0; j < 6; ++j) {
 			let li = document.createElement("li");
@@ -85,3 +88,17 @@ function setArticles(articles) {
 		list.appendChild(alink);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

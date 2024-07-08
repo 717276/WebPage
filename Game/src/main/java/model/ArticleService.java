@@ -22,6 +22,7 @@ public class ArticleService {
 		String sql = "{call getArticleByNo_proc(?,?,?)}";
 		Article article = null;
 		Comment comment = null;
+		ArrayList<Comment> comments = new ArrayList<>();
 		try {
 			con = db.getConntion();
 			cstmt = con.prepareCall(sql);
@@ -31,8 +32,9 @@ public class ArticleService {
 			cstmt.executeQuery();
 
 			arti = (ResultSet) cstmt.getObject(2);
+			if (arti == null) System.out.println("arti cant get object");
 			comt = (ResultSet) cstmt.getObject(3);
-			ArrayList<Comment> comments = new ArrayList<>();
+			
 			while (arti.next()) {
 				article = new Article();
 				article.setNo(arti.getInt("no"));
@@ -46,10 +48,11 @@ public class ArticleService {
 					comment = new Comment();
 					comment.setNo(comt.getInt("no"));
 					comment.setWriter(comt.getString("writer"));
-					comment.setWriter_no(comt.getInt("wrtier_no"));
+					comment.setWriter_no(comt.getInt("writer_no"));
 					comment.setContent(comt.getString("content"));
 					comment.setLike_count(comt.getInt("like_count"));
 					comment.setDislike_count(comt.getInt("dislike_count"));
+					comment.setCreatedDate(comt.getDate("createdDate"));
 
 					comments.add(comment);
 				}
@@ -73,6 +76,9 @@ public class ArticleService {
 		}
 		if (article == null) {
 			System.out.println("article is null");
+		}
+		if (comments.size() == 0) {
+			System.out.println("comments is zero");
 		}
 		return article;
 	}

@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 
 import model.ArticleService;
 import model.vo.Article;
+import model.vo.Comment;
 
 @WebServlet("/article/*")
 public class ArticleController extends HttpServlet {
@@ -24,20 +26,27 @@ public class ArticleController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Article> articles = null;
 		Article article = null;
-		String param = (String) request.getParameter("param");			
-		int no = Integer.parseInt(param);
 
-		if ("/get".equals(request.getPathInfo())) {			
+		if ("/get".equals(request.getPathInfo())) {
+			String param = (String) request.getParameter("param");			
+			int no = Integer.parseInt(param);
 			if (no == 0) {
-				 articles = articleService.getAllArticles();
-			} else {
+				articles = articleService.getAllArticles();				
+			} else {				
 				article = articleService.getArticleByNo(no);
+			    request.setAttribute("article", article);
+			    // forward to article.jsp
+			    RequestDispatcher dispatcher = request.getRequestDispatcher("/article.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}			
 		} else if ("/sort".equals(request.getPathInfo())){
 			// sort
+			String param = (String) request.getParameter("param");			
+			int no = Integer.parseInt(param);
 			articles = articleService.getArticlesBySort(no);
 		}
-		parseToGson(article, articles, response);
+		parseToGson(article, articles, response);		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

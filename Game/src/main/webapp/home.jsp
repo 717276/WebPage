@@ -15,6 +15,19 @@
 <link rel="stylesheet" href="/Game/css/home_other.css" />
 <link rel="stylesheet" href="/Game/css/header.css" />
 <link rel="stylesheet" href="/Game/css/footer.css" />
+<%
+Integer sessionVal = (Integer) session.getAttribute("login_session");
+int sint;
+String email = "";
+String nick = "";
+if (sessionVal == null) {
+	sint = -1;
+} else {
+	sint = sessionVal;
+	email = (String) session.getAttribute("email");
+	nick = (String) session.getAttribute("nickname");
+}
+%>
 </head>
 <body>
 	<c:import url="./header.jsp" />
@@ -49,47 +62,75 @@
 				</div>
 			</div>
 			<div class="login">
+				<%
+				if (sint == -1) {
+				%>
 				<div class="login_box">
 					<h4>로그인</h4>
-					<input type="hidden" id="user_no" name="user_no" value=-1>
+					<input type="hidden" id="user_no" name="user_no" value="<%=sint%>">
 					<table class="login_table">
 						<tr>
 							<td><label for="email">Email:</label></td>
 							<td><input id="email" name="email" type="email"
-								placeholder="Email" maxlength="30" size="30"></td>						
+								placeholder="Email" maxlength="30" size="30"></td>
 						</tr>
 						<tr>
 							<td><label for="password">Password:</label></td>
 							<td><input id="password" name="password" type="password"
-								placeholder="Password" maxlength="30" size="30"></td>							
+								placeholder="Password" maxlength="30" size="30"></td>
 						</tr>
 						<tr>
-							<td colspan=2><span id="loginError" style="display: none;">로그인 실패 아이디 패스워드 확인</span></td>
+							<td colspan="2"><span id="loginError" style="display: none;">로그인
+									실패 아이디 패스워드 확인</span></td>
 						</tr>
 						<tr>
-							<td colspan=2><button id="log_btn">로그인</button></td>
+							<td colspan="2"><button id="login_btn" onclick="login()">로그인</button></td>
 						</tr>
 					</table>
 				</div>
-				<div class="login_api">
-					<button>
-						<img id="google_api" alt="" src="">Google
-					</button>
-					<button>
-						<img id="naver_api" alt="" src="">Naver
-					</button>
+				<%
+				} else {
+				%>
+				<div class="logout_box">
+					<h4>환영합니다.</h4>
+					<input type="hidden" id="user_no" name="user_no" value="<%=sint%>">
+					<table class="login_table">
+						<tr>
+							<td>Email:</td>
+							<td><%=email%></td>
+						</tr>
+						<tr>
+							<td>NickName:</td>
+							<td><%=nick%></td>
+						</tr>
+						<tr>
+							<td colspan="2"><button id="logout_btn" onclick="logout()">로그아웃</button></td>
+						</tr>
+					</table>
 				</div>
+				<%
+				}
+				%>
+			<div class="login_api">
+				<button>
+					<img id="google_api" alt="" src="">Google
+				</button>
+				<button>
+					<img id="naver_api" alt="" src="">Naver
+				</button>
 			</div>
 		</div>
-		<div class="content_bottom">
-			<div class="notice_new">
-				<div class="new_info">주요 정보</div>
-			</div>
-			<!-- articles, article.no , article.title -->
-			<div class="others">
-				<div class="best_articles">Top 10</div>
-			</div>
+	</div>
+
+	<div class="content_bottom">
+		<div class="notice_new">
+			<div class="new_info">주요 정보</div>
 		</div>
+		<!-- articles, article.no , article.title -->
+		<div class="others">
+			<div class="best_articles">Top 10</div>
+		</div>
+	</div>
 	</div>
 	<c:import url="./footer.jsp" />
 </body>

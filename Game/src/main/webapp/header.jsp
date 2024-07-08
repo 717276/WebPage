@@ -25,13 +25,13 @@
             </div>            
             
             <div id="document">
-                <a href="./document.jsp">자료실</a>
+                <a href="/Game/document.jsp">자료실</a>
             </div>
             <div id="customerService">
-                <a href="./customerService.jsp">고객센터</a>
+                <a href="/Game/customerService.jsp">고객센터</a>
             </div>
             <div id="myPage">
-                <a href="./myPage.jsp">마이페이지</a>
+                <a href="/Game/myPage.jsp">마이페이지</a>
             </div>        
         </div>
     </div>

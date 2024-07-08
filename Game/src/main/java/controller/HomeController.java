@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -23,30 +24,42 @@ public class HomeController extends HttpServlet {
 	private HomeService homeService = new HomeService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {		
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String path = request.getPathInfo();
+		if ("/logout".equals(path)) {
+			session.invalidate(); // 세션 초기화
+
+			response.setContentType("text/plain");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write("SUCCESS");
+		} else {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String path = request.getPathInfo();
-		if ("/login".equals(path)) {			
+
+		if ("/login".equals(path)) {
 			Member login_session = homeService.login(request.getParameter("email"), request.getParameter("password"));
-			JsonObject jsonResponse = new JsonObject();
-			if (login_session == null) {
-				jsonResponse.addProperty("email", "");
-				jsonResponse.addProperty("nickname", "");
-				jsonResponse.addProperty("login_session", -1);
-			}else {				
-				jsonResponse.addProperty("email", login_session.getEmail());
-				jsonResponse.addProperty("nickname", login_session.getNickname());
-				jsonResponse.addProperty("login_session", login_session.getNo());
+			session.setAttribute("login_session", (Integer) login_session.getNo());
+			session.setAttribute("nickname", login_session.getNickname());
+			session.setAttribute("email", login_session.getEmail());
+
+			if (login_session != null) {
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("SUCCESS");
 			}
-			
-			Gson gson = new Gson();
-			String jsonData = gson.toJson(jsonResponse);
-			response.setContentType("application/json");
+		} else if ("/logout".equals(path)) {
+			session.invalidate(); // 세션 초기화
+
+			response.setContentType("text/plain");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(jsonData);
+			response.getWriter().write("SUCCESS");
 		} else {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}

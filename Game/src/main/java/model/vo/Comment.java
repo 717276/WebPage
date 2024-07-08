@@ -1,17 +1,21 @@
 package model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Comment {
 	private int no;
 	private int article_no;
 	private int writer_no;
 	private String writer;
-	private String content;
+	private String content;		
 	private Date createdDate;
-	
+		
 	public int like_count;
 	public int dislike_count;
+	
+	public int parent_no;
+	
 	public int getNo() {
 		return no;
 	}
@@ -60,5 +64,12 @@ public class Comment {
 	public void setDislike_count(int dislike_count) {
 		this.dislike_count = dislike_count;
 	}
+	public int getParent_no() {
+		return parent_no;
+	}
+	public void setParent_no(int parent_no) {
+		this.parent_no = parent_no;
+	}
+
 	
 }
