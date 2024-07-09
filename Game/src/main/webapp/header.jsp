@@ -4,24 +4,26 @@
     <div class="header_container">
         <div class="header_items">
             <div id="noice">
-                <a href="./notice.jsp">소식</a>
+                <a href="/Game/notice.jsp">소식</a>
                 <ul class="submenu">
                     <li>공지사항</li>
                     <li>업데이트</li>
                 </ul>
             </div>
             <div id="info">
-                <a href="./info.jsp">정보</a>
+                <a href="/Game/info.jsp">정보</a>
                 <ul class="submenu">
                     <li>설명</li>                
                 </ul>
             </div>
             <div id="community">
-                <a href="./community.jsp">커뮤니티</a>
+                <a href="/Game/community.jsp">커뮤니티</a>
             </div>
             
             <div id="img_box">
-            	<img id="img" src="" />
+            	<a href="/Game/home.jsp">            	
+	            	<img id="img" src="/Game/image/home.png" />
+            	</a>
             </div>            
             
             <div id="document">

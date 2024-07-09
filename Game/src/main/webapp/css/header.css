@@ -16,6 +16,15 @@
 	display:flex;
 	justify-content:space-evenly;
 }
+.header_items>#img_box{
+	width:10%;
+	height:100%;
+	padding-left:70px;	
+}
+#img{
+	width:40%;
+	height:100%;
+}
 .submenu {
 	display:none;	
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -211,5 +212,61 @@ public class ArticleService {
 			System.out.println("searched list is empty");			
 		}
 		return articles;
+	}
+
+	public boolean deleteArticleByNo(int no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql="delete from article where no = ?";
+		int rowsAffected = 0;
+		
+		try {
+			con = db.getConntion();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rowsAffected = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				db.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (rowsAffected > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean updateArticle(int no, String title, String content) {
+		// update Article
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "update article set title = ? , content = ? where no = ?";
+		int rowsAffected = 0;
+		try {
+			con = db.getConntion();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, no);
+			rowsAffected = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				db.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (rowsAffected > 0) {
+			return true;
+		}
+		return false;
 	}
 }

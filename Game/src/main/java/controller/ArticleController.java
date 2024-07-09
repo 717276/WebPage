@@ -25,9 +25,9 @@ public class ArticleController extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Article> articles = null;
-		Article article = null;
-
-		if ("/get".equals(request.getPathInfo())) {
+		Article article = null;		
+		String path = request.getPathInfo();
+		if ("/get".equals(path)) {
 			String param = (String) request.getParameter("param");			
 			int no = Integer.parseInt(param);
 			if (no == 0) {
@@ -40,21 +40,47 @@ public class ArticleController extends HttpServlet {
 			    dispatcher.forward(request, response);
 			    return;
 			}			
-		} else if ("/sort".equals(request.getPathInfo())){
+		} else if ("/sort".equals(path)){
 			// sort
 			String param = (String) request.getParameter("param");			
 			int no = Integer.parseInt(param);
 			articles = articleService.getArticlesBySort(no);
+		} else if ("/delete".equals(path)) {
+			String param = (String) request.getParameter("param");			
+			int no = Integer.parseInt(param);
+			boolean result = articleService.deleteArticleByNo(no);
+			
+			if (result) {				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("SUCCESS");
+			}
+			return;
+		} else {
+			
 		}
 		parseToGson(article, articles, response);		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if ("search".equals(request.getPathInfo())) {			
+		String path = request.getPathInfo();
+
+		if ("search".equals(path)) {			
 			String word = request.getParameter("search");
 			ArrayList<Article> articles = articleService.searchArticles(word);
 			parseToGson(null, articles, response);
-		}else {
+		}else if ("/update".equals(path)) {
+			String title = request.getParameter("title");
+			String content = request.getParameter("article");
+			String noStr = request.getParameter("no");			
+			int no = Integer.parseInt(noStr);
+			boolean result = articleService.updateArticle(no, title, content);
+			if (result) {				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("SUCCESS");
+			}
+		}else{
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "article 검색 오류");
 		}
 	}

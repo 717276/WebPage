@@ -2,6 +2,7 @@ package model;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import util.DB;
@@ -38,5 +39,33 @@ public class CommentService {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public boolean updateComment(int no, String content) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "update comments set content = ? where no = ?";
+		int rowsAffected = 0;
+		
+		try {
+			con = db.getConntion();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, no);
+			rowsAffected = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				db.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (rowsAffected > 0) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -18,7 +18,8 @@ public class CommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     CommentService commentService = new CommentService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if("/write".equals(request.getPathInfo())) {
+		String path = request.getPathInfo();
+		if("/write".equals(path)) {
 			String writer = request.getParameter("writer");
 		    String content = request.getParameter("content");
 		    int articleNo = Integer.parseInt(request.getParameter("articleNo"));
@@ -29,9 +30,17 @@ public class CommentController extends HttpServlet {
 		    LocalDateTime now = LocalDateTime.now();
 		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");	
 	        String formattedNow = now.format(formatter);
-
-	        response.setContentType("text/plain");
-	        response.setCharacterEncoding("UTF-8");
+   
+		} else if ("/update".equals(path)) {
+			String content = request.getParameter("content");
+			String noStr = request.getParameter("no");
+			int no = Integer.parseInt(noStr); 
+			boolean result = commentService.updateComment(no, content);
+			if (result) {				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("SUCCESS");
+			}
 		}
 	}
 

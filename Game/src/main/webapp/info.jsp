@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>notice</title>
+<title>Info</title>
 </head>
 <body>
-Notice
+Info
 </body>
 </html>

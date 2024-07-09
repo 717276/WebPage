@@ -39,11 +39,11 @@
 			 	if (sessionId != -1) {
 			 %>
                 <div class="write_box">
-                    <input id="write_btn" name="write_btn" type="button" value="글 작성" onclick="write()" />
+                    <input id="write_btn" name="write_btn" type="button" value="글 작성" onclick="writeArticle()" />
                 </div>
             <%
 			 	}
-            %>
+            %> 
 			<!--시간, 제목, 작성자, 조회수, 좋아요, 실어요 -->
 			<div class="list"></div>
 		</div>

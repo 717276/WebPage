@@ -45,9 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		})
 	})
 })
-function write(){
-	window.location.href="/Game/write.jsp";
+
+function writeArticle(){
+	window.location.href="write.jsp";
 }
+
+
 
 function setArticles(articles) {
 	$(".list").empty();
